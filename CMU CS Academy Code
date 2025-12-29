@@ -1,0 +1,545 @@
+import random
+#All sound effects and music are royalty free or from the Five Nights at Freddy's game by Scott Cawthon.
+#The phone guy voiceline was recorded by me.
+#Tracks used:
+    #Door Slam (https://freesound.org/people/adriann/sounds/440261/)
+    #Blip3
+    #Xscream
+    #Camera Video Load
+    #Ballasthummedium2
+    #Darkness Music
+    #Ambience 2
+    #Chimes 2
+    #Carmen Overture Toreador (Music Box)
+    #Powerdown
+    
+#Phone image is from freepngimg.com
+#All other external images taken from Five Nights at Freddy's and Five Nights at Freddy's 3 by Scott Cawthon.
+    
+#App Stuff
+app.office = Group()
+#external sounds
+door_slam = Sound('cmu://949828/37447175/440261__adriann__door-slam-no-reverb.wav')
+        #Source: https://freesound.org/people/adriann/sounds/440261/
+jumpscare_sound = Sound('cmu://949828/37484627/five-nights-at-freddys-full-scream-sound_2.mp3')
+blip = Sound('cmu://949828/44002867/Blip3.mp3')
+cameraLoad = Sound('cmu://949828/44002869/Camera+Video+Load.mp3')
+lightSound = Sound('cmu://949828/44002874/Ballasthummedium2.mp3')
+#external music
+menu_music = Sound('cmu://949828/44002857/Darkness+Music.mp3')
+fan = Sound('cmu://949828/44002882/Ambience+2.mp3')
+chimes = Sound('cmu://949828/44002966/Chimes+2.mp3')
+harHarHar = Sound('cmu://949828/44004183/Carmen+Overture+_Toreador_+(Music+Box).mp3')
+powerdown = Sound('cmu://949828/44004185/Powerdown.mp3')
+phone_guy = Sound('cmu://949828/44006823/fnaf+at+reds+phone+guy+2.mp3')
+menu_music.play(loop = True)
+#external images
+app.pizzaRoom = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/5/58/DiningAreaNoCamera.png/revision/latest/scale-to-width-down/1000?cb=20140825033602'
+app.supplyCloset = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/6/62/62.png/revision/latest/scale-to-width-down/1000?cb=20140825032125'
+app.exit = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/c/c2/CAM_01.png/revision/latest?cb=20200825194339'
+app.hallCamThree = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/8/82/CAM_03.png/revision/latest?cb=20200825195018'
+app.camNine = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/4/4c/CAM_09.png/revision/latest?cb=20200825200027'
+app.backstage = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/1/16/Backstage_nocamera.jpg/revision/latest/scale-to-width-down/1000?cb=20140825011955'
+app.camFive = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/0/02/CAM_05.png/revision/latest?cb=20200825195548'
+app.restrooms = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/5/5a/Restroom.jpeg/revision/latest?cb=20140825043517'
+#ui
+app.hour_list = ['12:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00']
+app.hour_counter = 0
+app.time = Label(app.hour_list[app.hour_counter], 350, 25, fill = 'white', size = 20, font = 'monospace')
+app.night = Label("NIGHT 1", 350, 50, fill = 'white', size = 15, font = 'monospace')
+app.hour_timer = 1800
+app.move_timer = 1000
+    #power
+app.power_timer = 1000
+app.power = 100
+app.power_label = Label('Power: ' + str(app.power) + '%', 60, 300, fill = 'white', size = 15, font = 'monospace')
+app.usage = 1
+app.usage_label = Label('Usage: ' + str(app.usage), 48, 325, fill = 'white', size = 15, font = 'monospace')
+app.ui = Group(app.time, app.night, app.power_label, app.usage_label)
+app.dark = Rect(0, 0, 400, 400, opacity = 50, visible = False)
+app.dark_timer = 1000
+app.death_countdown = 500
+app.power_out = False
+app.jumpscare = False
+app.jump_timer = 300
+app.death_label = Label('You died!', 200, 200, size = 40, fill = 'white', visible = False)
+
+#winning screen
+app.five = Label(5, 160, 200, fill = 'white', size =  50)
+app.six = Label(6, 160, 150, fill = 'white', size =  50)
+app.winning_screen = Group(
+Rect(0, 0, 400, 400),
+app.five,
+app.six,
+Label(":00", 210, 200, fill = 'white', size = 50),
+Rect(0, 0, 400, 175),
+Rect(0, 225, 400, 175))
+app.winning_screen.visible = False
+
+#Office
+app.office.look_left = False
+app.office.look_right = False
+app.fan_timer = 2
+
+app.spinning_fan = Group(
+Circle(290, 190, 50, fill = 'dimGrey', opacity  = 50),
+Circle(290, 190, 30, fill = 'grey', opacity  = 50))
+
+office_front = Group(
+Rect(0, 0, 400, 400, fill = gradient(rgb(40, 40, 50), 'black', start = 'top')),
+Polygon(50, 260, 0, 290, 400, 290, 350, 260, fill = 'dimGrey'),
+Rect(0, 290, 400, 110, fill = rgb(82, 82, 82)),
+Rect(25, 310, 150, 50, fill = rgb(95, 95, 95)),
+Rect(225, 310, 150, 50, fill = rgb(95, 95, 95)),
+Circle(100, 335, 7, fill = rgb(60, 60, 60)),
+Circle(300, 335, 7, fill = rgb(60, 60, 60)),
+Polygon(252, 265, 328, 265, 300, 240, 280, 240, fill = rgb(20, 20, 20), border = rgb(50, 50, 50)),
+Oval(290, 270, 75, 25, fill = rgb(50, 50, 50)),
+Oval(290, 265, 75, 25, fill = rgb(20, 20, 20)),
+Rect(252, 265, 76, 5, fill = rgb(20, 20, 20)),
+Rect(280, 190, 20, 50, fill = rgb(20, 20, 20), border = rgb(50, 50, 50)),
+Rect(282, 220, 16, 30, fill = rgb(20, 20, 20)),
+app.spinning_fan,
+Circle(290, 190, 40, fill = None, border = 'black'),
+Circle(290, 190, 30, fill = None, border = 'black'),
+Circle(290, 190, 20, fill = None, border = 'black'),
+Circle(290, 190, 10, fill = 'black'),
+Circle(290, 190, 50, fill = None, border = 'black'),
+Line(290, 240, 290, 140, lineWidth = 5, fill = rgb(20, 20, 20)),
+Line(240, 190, 340, 190, lineWidth = 5, fill = rgb(20, 20, 20)),
+Circle(290, 190, 10, fill = 'black'))
+
+#office right
+    #moving objects
+app.right_door_button = Rect(525, 200, 30, 30, fill = 'darkRed')
+app.right_light_button = Rect(525, 240, 30, 30, fill = rgb(60, 60, 60))
+app.right_window = Rect(355, 55, 190, 90, fill = 'darkSlateGrey', opacity = 5)
+app.right_door = Group(Polygon(575, 50, 675, 0, 675, 400, 575, 350, fill = gradient('darkSlateGrey','black', start = 'top'), opacity = 5))
+app.right_door.button = app.right_door
+app.right_door_block = Polygon(575, -350, 675, -400, 675, 0, 575, -50, fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top'))
+    #office
+office_right = Group(
+Rect(399, 0, 400, 400, fill = gradient(rgb(40, 40, 50), 'black', start = 'top')),
+Polygon(575, 50, 675, 0, 675, 400, 575, 350),
+app.right_door_button,
+app.right_light_button,
+Rect(350, 50, 200, 100, border = rgb(60, 60, 70), borderWidth = 5, fill = gradient(rgb(30, 30, 30),'black', 'black', start = 'right-top')),
+app.right_window,
+app.right_door,
+app.right_door_block,
+Polygon(575, 50, 675, 0, 575, 0, fill = gradient(rgb(40, 40, 50), rgb(35, 35, 45))),
+Polygon(575, 50, 675, 0, 675, 400, 575, 350, border = rgb(50, 50, 60), fill = None))
+
+#office left
+    #moving objects
+app.left_door_button = Rect(-155, 200, 30, 30, fill = 'darkRed')
+app.left_light_button = Rect(-155, 240, 30, 30, fill = rgb(60, 60, 60))
+app.left_window = Group(Rect(-95, 55, 190, 90, fill = 'darkSlateGrey', opacity = 5))
+app.left_window.button = app.left_window
+app.left_door = Group(Polygon(-275, 0, -175, 50, -175, 350, -275, 400, fill = gradient('darkSlateGrey', 'black', start = 'top'), opacity = 5))
+app.left_door_block = Polygon(-275, -400, -175, -350, -175, -50, -275, 0, fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top'))
+    #office
+office_left = Group(
+Rect(-399, 0, 400, 400, fill = gradient(rgb(40, 40, 50), 'black', start = 'top')),
+Polygon(-275, 0, -175, 50, -175, 350, -275, 400),
+app.left_door_button,
+app.left_light_button,
+Rect(-100, 50, 200, 100, border = rgb(60, 60, 70), borderWidth = 5, fill = gradient(rgb(30, 30, 30),'black', 'black', start = 'right-top')),
+app.left_window,
+app.left_door,
+app.left_door_block,
+Polygon(-275, 0, -175, 50, -175, 0, fill = gradient(rgb(40, 40, 50), rgb(35, 35, 45))),
+Polygon(-275, 0, -175, 50, -175, 350, -275, 400, border = rgb(50, 50, 60), fill = None))
+
+app.office.add(office_front)
+app.office.add(office_right)
+app.office.add(office_left)
+app.office.add(Image('cmu://949828/44006550/1-2-telephone-download-png.png', 50, 220, width = 120, height = 80))
+    #lights
+app.left_light_on = False
+app.right_light_on = False
+    #shutting doors
+app.right_door_shut = False
+app.left_door_shut = False
+#camera
+app.bottom_left_room = Group(Image(app.backstage, 0, 400, width = 700, height = 500))
+app.bottom_right_room = Group(Image(app.supplyCloset, 0, 400, width = 800, height = 500))
+app.center_left_room = Group(Image(app.camFive, 0, 400, width = 500, height = 500))
+app.center_right_room = Group(Image(app.restrooms, 0, 400, width = 800, height = 500))
+app.center_room = Group(Image(app.pizzaRoom, 0, 400))
+app.top_left_room = Group(Image(app.exit, 0, 400, width = 500, height = 500))
+app.top_right_room = Group(Image(app.hallCamThree, 0, 400, width = 500, height = 500))
+app.top_center_room = Group(Image(app.camNine, 0, 400, width = 700, height = 500))
+    #map buttons
+app.bottom_left_room.button = Rect(265, 320, 20, 20, border = 'grey')
+app.bottom_right_room.button = Rect(335, 320, 20, 20, border = 'grey')
+app.center_left_room.button = Rect(265, 285, 20, 20, border = 'grey')
+app.center_right_room.button = Rect(335, 285, 20, 20, border = 'grey')
+app.center_room.button = Rect(300, 285, 20, 20, border = 'grey')
+app.top_left_room.button = Rect(265, 250, 20, 20, border = 'grey')
+app.top_right_room.button = Rect(335, 250, 20, 20, border = 'grey')
+app.top_center_room.button = Rect(300, 250, 20, 20, fill = 'lightCyan', border = 'grey')
+app.map_buttons = Group(app.bottom_left_room.button, app.bottom_right_room.button, app.center_left_room.button, app.center_right_room.button,
+app.center_room.button, app.top_left_room.button, app.top_right_room.button, app.top_center_room.button)
+    #map
+app.map = Group(
+Rect(300, 320, 20, 20, fill = 'white'),
+Line(285, 330, 335, 330, fill = 'white'),
+Line(275, 320, 275, 305, fill = 'white'),
+Line(345, 320, 345, 305, fill = 'white'),
+Line(285, 295, 300, 295, fill = 'white'),
+Line(320, 295, 335, 295, fill = 'white'),
+Line(275, 285, 275, 270, fill = 'white'),
+Line(285, 260, 300, 260, fill = 'white'),
+Line(320, 260, 335, 260, fill = 'white'),
+Line(345, 270, 345, 285, fill = 'white'),
+Line(310, 270, 310, 285, fill = 'white'),
+app.map_buttons)
+app.map.centerY += 450
+    #red
+app.red = Circle(300, 700, 50, fill = gradient('darkRed', 'black'))
+    #rooms
+app.rooms = Group(app.bottom_left_room, app.bottom_right_room, app.center_left_room,
+app.center_right_room, app.center_room, app.top_left_room, app.top_right_room, app.top_center_room)
+app.current_room = app.top_left_room
+    #functions
+app.camera = Group(app.rooms, app.map)
+app.camera_button = Group(
+    Rect(0, 360, 400, 50, fill = 'grey', opacity = 5, border = 'dimGrey'),
+    Line(175, 370, 200, 380, fill = 'dimGrey'),
+    Line(200, 380, 225, 370, fill = 'dimGrey'),
+    Line(175, 380, 200, 390, fill = 'dimGrey'),
+    Line(200, 390, 225, 380, fill = 'dimGrey'))
+app.cam_up = False
+app.ui.toFront()
+#main menu
+app.start_button = Label('Start Game', 75, 200, fill = 'red', size = 20)
+app.start = False
+app.red_menu = Circle(350, 200, 100, fill = 'red')
+
+app.main_menu = Group(
+Rect(0, 0, 400, 400),
+Rect(25, 190, 100, 20),
+Label('fnaf at reds', 125, 100, fill = 'red', size = 40),
+Label('dont play if you have epilepsy', 100, 180, fill = 'red', size = 15),
+app.start_button,
+app.red_menu)
+app.red_list = [
+    Rect(240, 50, 200, 200, fill = 'red', visible = False),
+    Group(Circle(350, 200, 100, fill = 'red'), Line(300, 190, 270, 160), Circle(283, 194, 5), Line(340, 190, 370, 160), Circle(355, 194, 5), visible = False),
+    Circle(350, 250, 100, fill = 'red', visible = False),
+    Circle(325, 200, 100, fill = 'red', visible = False)
+    ]
+
+app.red_timer = 30
+#animatronic ai functions
+    #actual moving
+def redMove(room):
+    app.current_room = room
+    app.red.visible = True
+    room.add(app.red)
+        
+    #when to move
+def redAI(agression):
+    adjacent_rooms = []
+    #doors
+    if app.jumpscare == False:
+        for room in app.rooms.children:
+    #rooms
+            if ((room.button.centerX == app.current_room.button.centerX + 35 or room.button.centerX == app.current_room.button.centerX - 35) and room.button.centerY == app.current_room.button.centerY) or ((room.button.centerY == app.current_room.button.centerY + 35 or room.button.centerY == app.current_room.button.centerY + 35) and  room.button.centerX == app.current_room.button.centerX):
+                adjacent_rooms.append(room)
+            elif room in adjacent_rooms:
+                adjacent_rooms.remove(room)
+        if app.red in app.bottom_left_room:
+            adjacent_rooms.append(app.left_window)
+        if app.red in app.bottom_right_room:
+            adjacent_rooms.append(app.right_door)
+        if app.move_timer == 0 and len(adjacent_rooms) > 0:
+            redMove(adjacent_rooms[random.randint(0, (len(adjacent_rooms) - 1))])
+    #doors
+        if app.red in app.left_window:
+            app.red.centerX = app.left_window.centerX
+            app.red.centerY = app.left_window.centerY
+            app.red.radius = 45
+            app.jump_timer -= 1
+        if app.red in app.right_door:
+            app.red.centerX = app.right_door.centerX
+            app.red.centerY = app.right_door.centerY
+            app.jump_timer -= 1
+        if app.jump_timer <= 0:
+            app.jumpscare = True
+    #agression
+    if agression == 1:
+        if app.move_timer == 0:
+            app.move_timer = 400
+    if agression == 2:
+        if app.move_timer == 0:
+            app.move_timer = 300
+    if agression == 3:
+        if app.move_timer == 0:
+            app.move_timer = 100
+    if agression == 4:
+        if app.move_timer == 0:
+            app.move_timer = 1000
+    
+redMove(app.top_left_room)
+#onMousePress function
+def onMousePress(mouseX, mouseY):
+    if app.start_button.hits(mouseX, mouseY):
+        app.start = True
+        blip.play()
+        fan.play(loop = True)
+        phone_guy.play()
+    #rooms
+    for room in app.rooms.children:
+        if room.button.hits(mouseX, mouseY):
+            room.opacity = 100
+            room.toFront()
+            app.map_buttons.fill = 'black'
+            room.button.fill = 'lightCyan'
+    #lights
+    if app.power_out == False and app.cam_up == False:
+        if app.left_light_button.hits(mouseX, mouseY):
+            lightSound.play(restart = True)
+            if app.left_light_on == True:
+                lightSound.pause()
+            app.left_light_on = not app.left_light_on
+        if app.right_light_button.hits(mouseX, mouseY):
+            lightSound.play(restart = True)
+            if app.right_light_on == True:
+                lightSound.pause()
+            app.right_light_on = not app.right_light_on
+    #doors
+        if app.right_door_button.hits(mouseX, mouseY):
+            app.right_door_shut = not app.right_door_shut
+            if app.right_door_shut == True:
+                door_slam.play(restart = True)
+            if app.red in app.right_door:
+                redMove(app.top_left_room)
+                app.red.centerX = 300
+                app.red.centerY = 700
+                app.red.radius = 50
+                app.jump_timer = 300
+        if app.left_door_button.hits(mouseX, mouseY):
+            app.left_door_shut = not app.left_door_shut
+            if app.left_door_shut == True:
+                door_slam.play(restart = True)
+            if app.red in app.left_window:
+                redMove(app.top_right_room)
+                app.red.centerX = 300
+                app.red.centerY = 700
+                app.red.radius = 50
+                app.jump_timer = 300
+        
+#onMouseMove function
+def onMouseMove(mouseX, mouseY):
+    #looking around
+    if mouseX >= 250:
+        app.office.look_right = True
+    if mouseX >= 300:
+        app.office.fast_right = True
+    if not mouseX >= 250:
+        app.office.look_right = False
+    if not mouseX >= 300:
+        app.office.fast_right = False
+    if mouseX <= 150:
+        app.office.look_left = True
+    if mouseX <= 100:
+        app.office.fast_left = True
+    if not mouseX <= 100:
+        app.office.fast_left = False
+    if not mouseX <= 150:
+        app.office.look_left = False
+    #camera
+    if app.power_out == False:
+        if app.camera_button.hits(mouseX, mouseY) == True:
+            #jumpscare
+            if app.red in app.left_window or app.red in app.right_door and app.cam_up == False:
+                app.jumpscare = True
+                app.red.radius = 10
+            elif app.camera.top >= 0 and app.camera_button.visible == True and app.start == True:
+                cameraLoad.play(restart = True)
+                app.cam_up = True
+            elif not app.camera.top >= 0 and app.camera_button.visible == True: 
+                app.cam_up = False
+                cameraLoad.pause()
+                blip.play()
+            app.camera_button.visible = False
+        if app.camera_button.hits(mouseX, mouseY) == False:
+            app.camera_button.visible = True
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+#onStep function
+def onStep():
+    #menu
+    if app.start == False:
+        app.red_timer -= 1
+        if app.red_timer <= 0:
+            app.red_list[randrange(0, 4)].visible = True
+            app.red_menu.visible = False
+            app.red_timer = 30
+        if app.red_timer == 27:
+            for i in range(len(app.red_list)):
+                app.red_list[i-1].visible = False
+            app.red_menu.visible = True
+    #game start
+    if app.start == True:
+        menu_music.pause()
+        #red move
+        app.move_timer -= 1
+        if app.time.value == '12:00':
+            redAI(4)
+        if app.time.value == '1:00':
+            redAI(1)
+        if app.time.value == '2:00' or app.time.value == '3:00':
+            redAI(2)
+        if app.time.value == '4:00' or app.time.value == '5:00':
+            redAI(3)
+        #power
+        app.power_timer -= 1 * app.usage
+        if app.power_timer <= 0 and app.power > 0:
+            app.power -= 1
+            app.power_label.value = 'Power: ' + str(app.power) + '%'
+            app.power_timer = 70
+            #power out
+        if app.power <= 0:
+            app.power_out = True
+            app.power = 0
+            powerdown.play()
+        if app.power_out == True:
+            app.dark_timer -= 1
+            app.dark.visible = True
+            app.ui.toFront()
+            app.cam_up = False
+            app.left_light_on = False
+            app.right_light_on = False
+            app.left_door_shut = False
+            app.right_door_shut = False
+            if app.jumpscare == False:
+                if app.time.value != '6:00' and app.dark_timer <= 800:
+                    harHarHar.play()
+                    app.red.fill = gradient('red', 'black')
+                    app.office.add(app.red)
+                    app.red.centerX = app.left_door.centerX
+                    app.red.centerY = app.left_door.centerY - 50
+                    app.red.radius = 40
+                    app.red.opacity = 100
+                    app.red.toFront()
+                if app.red in app.office and app.death_countdown >= 0:
+                    app.death_countdown -= 1
+                if app.death_countdown <= 0:
+                    app.office.remove(app.red)
+                    app.jumpscare = True
+            #jumpscare
+        if app.jumpscare == True and app.red.radius < 600 and app.winning_screen.visible == False:
+            app.red.toFront()
+            app.ui.add(app.red)
+            jumpscare_sound.play()
+            app.red.opacity = 100
+            app.red.centerX = 200
+            app.red.centerY = 200
+            app.red.radius += 30
+        if app.red.radius >= 400:
+            app.death_label.visible = True
+            app.death_label.toFront()
+        for i in range(len(app.red_list)):
+            app.red_list[i-1].visible = False
+        app.main_menu.visible = False
+        app.red_menu.visible = False
+        app.time.visible = True
+        app.night.visible = True
+        app.hour_timer -= 1
+        app.fan_timer -= 1
+        #fan spinning
+        if app.power_out == False:
+            if app.spinning_fan.opacity == 50 and app.fan_timer <=0:
+                app.spinning_fan.opacity = 30
+                app.fan_timer = 1
+            if not app.spinning_fan.opacity == 50 and app.fan_timer <=0:
+                app.spinning_fan.opacity = 50
+                app.fan_timer = 1
+        #ui
+        if app.hour_timer <= 0 and app.hour_counter < 6:
+            app.hour_timer = 870
+            app.hour_counter += 1
+            app.time.value = app.hour_list[app.hour_counter]
+            #winning
+        if app.time.value == '6:00' and app.jumpscare == False:
+            app.winning_screen.visible = True
+            app.winning_screen.toFront()
+            if app.six.centerY < 200:
+                chimes.play()
+                harHarHar.pause()
+                fan.pause()
+                app.five.centerY += 0.25
+                app.six.centerY += 0.25
+        #looking around
+        if app.cam_up == False:
+            if app.office.look_right == True and app.office.centerX > -100:
+                app.office.centerX -= 5
+                if app.office.fast_right == True:
+                    app.office.centerX -= 15
+            if app.office.look_left == True and app.office.centerX < 500:
+                app.office.centerX += 5
+                if app.office.fast_left == True:
+                    app.office.centerX += 15
+        #camera animation
+        if app.cam_up == True:
+            if app.camera.top >= 0:
+                app.camera.top -= 75
+        if app.cam_up == False:
+            if app.camera.top <= 400:
+                app.camera.top += 75
+        #lights
+            #left
+        if app.left_light_on == True:
+            randlight = random.random()
+            if randlight > 0.05:
+                app.left_door.opacity = 100
+                app.left_window.opacity = 100
+                app.left_door_block.fill = gradient('dimGrey', rgb(30, 40, 40), start = 'top')
+            else:
+                app.left_door.opacity = 5
+                app.left_window.opacity = 5
+                app.left_door_block.fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top')
+        if app.left_light_on == False:
+            app.left_door.opacity = 5
+            app.left_window.opacity = 5
+            app.left_door_block.fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top')
+            #right
+        if app.right_light_on == True:
+            randlight = random.random()
+            if randlight > 0.05:
+                app.right_door.opacity = 100
+                app.right_window.opacity = 100
+                app.right_door_block.fill = gradient('dimGrey', rgb(30, 40, 40), start = 'top')
+            else:
+                app.right_door.opacity = 5
+                app.right_window.opacity = 5
+                app.right_door_block.fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top')
+        if app.right_light_on == False:
+            app.right_door.opacity = 5
+            app.right_window.opacity = 5
+            app.right_door_block.fill = gradient('dimGrey', rgb(20, 20, 30), start = 'top')
+        #usage
+        app.usage_label.value = 'Usage: ' + str(app.usage)
+        app.usage = 1 + int(app.cam_up) + int(app.left_light_on) + int(app.right_light_on) + int(app.right_door_shut) * 2 + int(app.left_door_shut) * 2
+        #doors
+        if app.right_door_shut == True and app.right_door_block.centerY < 200:
+            app.right_door_block.centerY += 50
+        if app.right_door_shut == False and app.right_door_block.centerY > -200:
+            app.right_door_block.centerY -= 50
+        if app.left_door_shut == True and app.left_door_block.centerY < 200:
+            app.left_door_block.centerY += 50
+        if app.left_door_shut == False and app.left_door_block.centerY > -200:
+            app.left_door_block.centerY -= 50
