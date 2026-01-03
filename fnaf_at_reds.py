@@ -195,6 +195,7 @@ Line(285, 260, 300, 260, fill = 'white'),
 Line(320, 260, 335, 260, fill = 'white'),
 Line(345, 270, 345, 285, fill = 'white'),
 Line(310, 270, 310, 285, fill = 'white'),
+Label("YOU", 310, 330, size = 10, font = 'monospace'),
 app.map_buttons)
 app.map.centerY += 450
     #red
@@ -222,7 +223,7 @@ app.main_menu = Group(
 Rect(0, 0, 400, 400),
 Rect(25, 190, 100, 20),
 Label('fnaf at reds', 125, 100, fill = 'red', size = 40),
-Label('dont play if you have epilepsy', 100, 180, fill = 'red', size = 15),
+Label('WARNING: contains flashing lights', 120, 180, fill = 'red', size = 15),
 app.start_button,
 app.red_menu)
 app.red_list = [
@@ -415,8 +416,8 @@ def onStep():
             #power out
         if app.power <= 0:
             app.power_out = True
-            app.power = 0
             powerdown.play()
+            app.power = 0
         if app.power_out == True:
             app.dark_timer -= 1
             app.dark.visible = True
@@ -476,12 +477,15 @@ def onStep():
             app.time.value = app.hour_list[app.hour_counter]
             #winning
         if app.time.value == '6:00' and app.jumpscare == False:
+            harHarHar.pause()
+            fan.pause()
+            powerdown.pause()
+            lightSound.pause()
             app.winning_screen.visible = True
             app.winning_screen.toFront()
+            app.ui.visible = False
             if app.six.centerY < 200:
                 chimes.play()
-                harHarHar.pause()
-                fan.pause()
                 app.five.centerY += 0.25
                 app.six.centerY += 0.25
         #looking around
