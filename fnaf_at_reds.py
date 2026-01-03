@@ -1,3 +1,4 @@
+from cmu_graphics import *
 import random
 #All sound effects and music are royalty free or from the Five Nights at Freddy's game by Scott Cawthon.
 #The phone guy voiceline was recorded by me.
@@ -543,3 +544,4 @@ def onStep():
             app.left_door_block.centerY += 50
         if app.left_door_shut == False and app.left_door_block.centerY > -200:
             app.left_door_block.centerY -= 50
+cmu_graphics.run()
