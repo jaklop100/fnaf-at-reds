@@ -20,29 +20,29 @@ import random
 #App Stuff
 app.office = Group()
 #external sounds
-door_slam = Sound('cmu://949828/37447175/440261__adriann__door-slam-no-reverb.wav')
+door_slam = Sound("fnaf_at_reds_Music_SFX_and_Images\440261__adriann__door-slam-no-reverb (1).wav")
         #Source: https://freesound.org/people/adriann/sounds/440261/
-jumpscare_sound = Sound('cmu://949828/37484627/five-nights-at-freddys-full-scream-sound_2.mp3')
-blip = Sound('cmu://949828/44002867/Blip3.mp3')
-cameraLoad = Sound('cmu://949828/44002869/Camera+Video+Load.mp3')
-lightSound = Sound('cmu://949828/44002874/Ballasthummedium2.mp3')
+jumpscare_sound = Sound("fnaf_at_reds_Music_SFX_and_Images\five-nights-at-freddys-full-scream-sound_2.mp3")
+blip = Sound("fnaf_at_reds_Music_SFX_and_Images\Blip3.mp3")
+cameraLoad = Sound("fnaf_at_reds_Music_SFX_and_Images\Camera Video Load.mp3")
+lightSound = Sound("fnaf_at_reds_Music_SFX_and_Images\Ballasthummedium2.mp3")
 #external music
-menu_music = Sound('cmu://949828/44002857/Darkness+Music.mp3')
-fan = Sound('cmu://949828/44002882/Ambience+2.mp3')
-chimes = Sound('cmu://949828/44002966/Chimes+2.mp3')
-harHarHar = Sound('cmu://949828/44004183/Carmen+Overture+_Toreador_+(Music+Box).mp3')
-powerdown = Sound('cmu://949828/44004185/Powerdown.mp3')
-phone_guy = Sound('cmu://949828/44006823/fnaf+at+reds+phone+guy+2.mp3')
+menu_music = Sound("fnaf_at_reds_Music_SFX_and_Images\Darkness Music.mp3")
+fan = Sound("fnaf_at_reds_Music_SFX_and_Images\Ambience 2.mp3")
+chimes = Sound("fnaf_at_reds_Music_SFX_and_Images\Chimes 2.mp3")
+harHarHar = Sound("fnaf_at_reds_Music_SFX_and_Images\Carmen Overture _Toreador_ (Music Box).mp3")
+powerdown = Sound("fnaf_at_reds_Music_SFX_and_Images\Powerdown.mp3")
+phone_guy = Sound("fnaf_at_reds_Music_SFX_and_Images\fnaf at reds phone guy 2.mp3")
 menu_music.play(loop = True)
 #external images
-app.pizzaRoom = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/5/58/DiningAreaNoCamera.png/revision/latest/scale-to-width-down/1000?cb=20140825033602'
-app.supplyCloset = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/6/62/62.png/revision/latest/scale-to-width-down/1000?cb=20140825032125'
-app.exit = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/c/c2/CAM_01.png/revision/latest?cb=20200825194339'
-app.hallCamThree = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/8/82/CAM_03.png/revision/latest?cb=20200825195018'
-app.camNine = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/4/4c/CAM_09.png/revision/latest?cb=20200825200027'
-app.backstage = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/1/16/Backstage_nocamera.jpg/revision/latest/scale-to-width-down/1000?cb=20140825011955'
-app.camFive = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/0/02/CAM_05.png/revision/latest?cb=20200825195548'
-app.restrooms = 'https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/5/5a/Restroom.jpeg/revision/latest?cb=20140825043517'
+app.pizzaRoom = "fnaf_at_reds_Music_SFX_and_Images\pizza_room.webp"
+app.supplyCloset = "fnaf_at_reds_Music_SFX_and_Images\supply_closet.webp"
+app.exit = "fnaf_at_reds_Music_SFX_and_Images\exit.webp"
+app.hallCamThree = "fnaf_at_reds_Music_SFX_and_Images\hallCam3.webp"
+app.camNine = "fnaf_at_reds_Music_SFX_and_Images\hallCamNine.webp"
+app.backstage = "fnaf_at_reds_Music_SFX_and_Images\Backstage.webp"
+app.camFive = "fnaf_at_reds_Music_SFX_and_Images\camFive.webp"
+app.restrooms = "fnaf_at_reds_Music_SFX_and_Images\restrooms.webp"
 #ui
 app.hour_list = ['12:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00']
 app.hour_counter = 0
