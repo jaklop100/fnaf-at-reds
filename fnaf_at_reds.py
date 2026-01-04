@@ -20,29 +20,29 @@ import random
 #App Stuff
 app.office = Group()
 #external sounds
-door_slam = Sound("fnaf_at_reds_Music_SFX_and_Images\440261__adriann__door-slam-no-reverb (1).wav")
+door_slam = Sound("fnaf_at_reds_Music_SFX_and_Images/440261__adriann__door-slam-no-reverb.wav")
         #Source: https://freesound.org/people/adriann/sounds/440261/
-jumpscare_sound = Sound("fnaf_at_reds_Music_SFX_and_Images\five-nights-at-freddys-full-scream-sound_2.mp3")
-blip = Sound("fnaf_at_reds_Music_SFX_and_Images\Blip3.mp3")
-cameraLoad = Sound("fnaf_at_reds_Music_SFX_and_Images\Camera Video Load.mp3")
-lightSound = Sound("fnaf_at_reds_Music_SFX_and_Images\Ballasthummedium2.mp3")
+jumpscare_sound = Sound("fnaf_at_reds_Music_SFX_and_Images/five-nights-at-freddys-full-scream-sound_2.mp3")
+blip = Sound("fnaf_at_reds_Music_SFX_and_Images/Blip3.mp3")
+cameraLoad = Sound("fnaf_at_reds_Music_SFX_and_Images/Camera_Video_Load.mp3")
+lightSound = Sound("fnaf_at_reds_Music_SFX_and_Images/Ballasthummedium2.mp3")
 #external music
-menu_music = Sound("fnaf_at_reds_Music_SFX_and_Images\Darkness Music.mp3")
-fan = Sound("fnaf_at_reds_Music_SFX_and_Images\Ambience 2.mp3")
-chimes = Sound("fnaf_at_reds_Music_SFX_and_Images\Chimes 2.mp3")
-harHarHar = Sound("fnaf_at_reds_Music_SFX_and_Images\Carmen Overture _Toreador_ (Music Box).mp3")
-powerdown = Sound("fnaf_at_reds_Music_SFX_and_Images\Powerdown.mp3")
-phone_guy = Sound("fnaf_at_reds_Music_SFX_and_Images\fnaf at reds phone guy 2.mp3")
+menu_music = Sound("fnaf_at_reds_Music_SFX_and_Images/Darkness-Music.mp3")
+fan = Sound("fnaf_at_reds_Music_SFX_and_Images/Ambience_2.mp3")
+chimes = Sound("fnaf_at_reds_Music_SFX_and_Images/Chimes_2.mp3")
+harHarHar = Sound("fnaf_at_reds_Music_SFX_and_Images/Carmen_Overture_Toreador_Music_Box.mp3")
+powerdown = Sound("fnaf_at_reds_Music_SFX_and_Images/Powerdown.mp3")
+phone_guy = Sound("fnaf_at_reds_Music_SFX_and_Images/fnaf_at_reds_phone_guy_2.mp3")
 menu_music.play(loop = True)
 #external images
-app.pizzaRoom = "fnaf_at_reds_Music_SFX_and_Images\pizza_room.webp"
-app.supplyCloset = "fnaf_at_reds_Music_SFX_and_Images\supply_closet.webp"
-app.exit = "fnaf_at_reds_Music_SFX_and_Images\exit.webp"
-app.hallCamThree = "fnaf_at_reds_Music_SFX_and_Images\hallCam3.webp"
-app.camNine = "fnaf_at_reds_Music_SFX_and_Images\hallCamNine.webp"
-app.backstage = "fnaf_at_reds_Music_SFX_and_Images\Backstage.webp"
-app.camFive = "fnaf_at_reds_Music_SFX_and_Images\camFive.webp"
-app.restrooms = "fnaf_at_reds_Music_SFX_and_Images\restrooms.webp"
+app.pizzaRoom = "fnaf_at_reds_Music_SFX_and_Images/pizza_room.webp"
+app.supplyCloset = "fnaf_at_reds_Music_SFX_and_Images/supply_closet.webp"
+app.exit = "fnaf_at_reds_Music_SFX_and_Images/exit.webp"
+app.hallCamThree = "fnaf_at_reds_Music_SFX_and_Images/hallCam3.webp"
+app.camNine = "fnaf_at_reds_Music_SFX_and_Images/hallCamNine.webp"
+app.backstage = "fnaf_at_reds_Music_SFX_and_Images/Backstage.webp"
+app.camFive = "fnaf_at_reds_Music_SFX_and_Images/camFive.webp"
+app.restrooms = "fnaf_at_reds_Music_SFX_and_Images/restrooms.webp"
 #ui
 app.hour_list = ['12:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00']
 app.hour_counter = 0
