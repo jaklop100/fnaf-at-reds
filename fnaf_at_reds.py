@@ -32,7 +32,7 @@ fan = Sound("fnaf_at_reds_Music_SFX_and_Images/Ambience_2.mp3")
 chimes = Sound("fnaf_at_reds_Music_SFX_and_Images/Chimes_2.mp3")
 harHarHar = Sound("fnaf_at_reds_Music_SFX_and_Images/Carmen_Overture_Toreador_Music_Box.mp3")
 powerdown = Sound("fnaf_at_reds_Music_SFX_and_Images/Powerdown.mp3")
-phone_guy = Sound("fnaf_at_reds_Music_SFX_and_Images/fnaf_at_reds_phone_guy_2.mp3")
+phone_guy = Sound("fnaf_at_reds_Music_SFX_and_Images/fnaf-at-reds-phone-guy-2.mp3")
 menu_music.play(loop = True)
 #external images
 app.pizzaRoom = "fnaf_at_reds_Music_SFX_and_Images/pizza_room.webp"
@@ -155,7 +155,7 @@ Polygon(-275, 0, -175, 50, -175, 350, -275, 400, border = rgb(50, 50, 60), fill 
 app.office.add(office_front)
 app.office.add(office_right)
 app.office.add(office_left)
-app.office.add(Image('cmu://949828/44006550/1-2-telephone-download-png.png', 50, 220, width = 120, height = 80))
+app.office.add(Image('fnaf_at_reds_Music_SFX_and_Images/1-2-telephone-download-png.png', 50, 220, width = 120, height = 80))
     #lights
 app.left_light_on = False
 app.right_light_on = False
