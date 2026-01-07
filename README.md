@@ -1,3 +1,5 @@
+# fnaf at reds
+
 ### HOW TO SET UP:
 NOTE: CMU Graphics currently on supports Python 3.9 - 3.13. If you have python 3.14, you will have to install an earlier version.
 
